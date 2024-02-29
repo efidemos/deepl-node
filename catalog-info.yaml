@@ -9,6 +9,7 @@ metadata:
   tags:
     - nodejs
     - test
+    - edit
 
 spec:
   type: openapi
