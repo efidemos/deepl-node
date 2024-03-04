@@ -10,7 +10,6 @@ metadata:
     - nodejs
     - test
     - edit
-
 spec:
   type: openapi
   lifecycle: production
@@ -38,7 +37,7 @@ spec:
     - name: TranslateText
       description: |-
         The text-translation API currently consists of a single endpoint, `translate`, which is described below.
-    
+
         To learn more about context in DeepL API translations, we recommend [this article](https://www.deepl.com/docs-api/general/working-with-context).
     - name: TranslateDocuments
       description: |-
@@ -50,18 +49,18 @@ spec:
           * `htm / html` - HTML Document
           * `txt` - Plain Text Document
           * `xlf / xliff` - XLIFF Document, version 2.1
-    
+
         Please note that with every submitted document of type .pptx, .docx, .xlsx, or .pdf,
         you are billed a minimum of 50,000 characters with the DeepL API plan,
         no matter how many characters are included in the document.
-    
-    
+
+
         Translating a document usually involves three types of HTTP requests:
           - [upload](https://www.deepl.com/docs-api/documents/translate-document) the document to be translated,
           - periodically [check the status](https://www.deepl.com/docs-api/documents/get-document-status) of the document translation,
           - once the status call reports `done`, [download](https://www.deepl.com/docs-api/documents/download-document) the translated document.
-    
-    
+
+
         To learn more about context in DeepL API translations, we recommend [this article](https://www.deepl.com/docs-api/general/working-with-context).
     - name: ManageGlossaries
       description: |-
@@ -69,10 +68,10 @@ spec:
         Glossaries created with the glossary function can be used in translate requests by specifying the
         `glossary_id` parameter.
         If you encounter issues, please let us know at support@DeepL.com.
-    
+
         The DeepL API supports glossaries in any combination of two languages from the following list, enabling a total of
         55 possible glossary language pairs:
-    
+
         - DE (German)
         - EN (English)
         - ES (Spanish)
@@ -84,23 +83,23 @@ spec:
         - PT (Portuguese)
         - RU (Russian)
         - ZH (Chinese)
-    
+
         The maximum size limit for a glossary is 10 MiB = 10485760 bytes and each source/target text,
         as well as the name of the glossary, is limited to 1024 UTF-8 bytes.
         A total of 1000 glossaries are allowed per account.
-    
+
         When creating a glossary with target language `EN` or `PT`, it's not necessary to specify a variant (e.g. `EN-US`, `EN-GB`, `PT-PT` or `PT-BR`).
         Glossaries with target language `EN` can be used in translations with either English variant.
         Similarly `PT` glossaries can be used in translations with either Portuguese variant.
-    
-    
+
+
         Glossaries created via the DeepL API are distinct from glossaries created via the DeepL website and DeepL apps.
         This means API glossaries cannot be used on the website and vice versa.
-    
-    
-    
+
+
+
         Note that glossaries are immutable: once created, the glossary entries for a given glossary ID cannot be modified.
-    
+
         As a workaround for effectively editable glossaries, we suggest to identify glossaries by name instead of ID in your application
         and then use the following procedure for modifications:
         - [download](https://www.deepl.com/docs-api/glossaries/get-glossary-entries) and store the current glossary's entries,
@@ -118,8 +117,8 @@ spec:
           operationId: translateText
           description: |-
             The translate function.
-    
-    
+
+
             The total request body size must not exceed 128 KiB (128 · 1024 bytes). Please split up your text into multiple
             calls if it exceeds this limit.
           requestBody:
@@ -326,20 +325,20 @@ spec:
             The call returns once the upload is complete, returning a document ID and key which can be used to
             [query the translation status](https://www.deepl.com/docs-api/documents/get-document-status)
             and to [download the translated document](https://www.deepl.com/docs-api/documents/download-document) once translation is complete.
-    
-    
-    
+
+
+
             Because the request includes a file upload, it must be an HTTP POST request with content type `multipart/form-data`.
-    
-    
+
+
             Please be aware that the uploaded document is automatically removed from the server once the translated document has been downloaded.
             You have to upload the document again in order to restart the translation.
-    
-    
+
+
             The maximum upload limit for documents is [available here](https://support.deepl.com/hc/articles/360020582359-Document-formats)
             and may vary based on API plan and document type.
-    
-    
+
+
             You may specify the glossary to use for the document translation using the `glossary_id` parameter.
             **Important:** This requires the `source_lang` parameter to be set and the language pair of the glossary has to match the language pair of the request.
           requestBody:
@@ -562,8 +561,8 @@ spec:
           operationId: downloadDocument
           description: |-
             Once the status of the document translation process is `done`, the result can be downloaded.
-    
-    
+
+
             For privacy reasons the translated document is automatically removed from the server once it was downloaded and cannot be downloaded again.
           parameters:
           - $ref: '#/components/parameters/DocumentID'
@@ -938,12 +937,12 @@ spec:
             - translated characters
             - translated documents
             - translated documents, team totals (for team accounts only)
-    
+
             Character usage includes both text and document translations, and is measured by the source text length in Unicode code points,
             so for example "A", "Δ", "あ", and "深" are each counted as a single character.
-    
+
             Document usage only includes document translations, and is measured in individual documents.
-    
+
             Depending on the user account type, some usage types will be omitted.
             Character usage is only included for developer accounts.
             Document usage is only included for non-developer accounts, and team-combined document usage is only included for non-developer team accounts.
@@ -1312,7 +1311,7 @@ spec:
                 The format in which the glossary entries are provided. Formats currently available:
                 - `tsv` (default) - tab-separated values
                 - `csv` - comma-separated values
-    
+
                 See [Supported Glossary Formats](https://www.deepl.com/docs-api/glossaries/formats) for details about each format.
               type: string
               enum:
@@ -1439,8 +1438,8 @@ spec:
         OutlineDetectionOption:
           description: |-
             The automatic detection of the XML structure won't yield best results in all XML files. You can disable this automatic mechanism altogether by setting the `outline_detection` parameter to `false` and selecting the tags that should be considered structure tags. This will split sentences using the `splitting_tags` parameter.
-    
-    
+
+
             In the example below, we achieve the same results as the automatic engine by disabling automatic detection with `outline_detection=0` and setting the parameters manually to `tag_handling=xml`, `split_sentences=nonewlines`,  and `splitting_tags=par,title`.
              * Example request:
                ```
@@ -1472,8 +1471,8 @@ spec:
         OutlineDetectionOptionStr:
           description: |-
             The automatic detection of the XML structure won't yield best results in all XML files. You can disable this automatic mechanism altogether by setting the `outline_detection` parameter to `0` and selecting the tags that should be considered structure tags. This will split sentences using the `splitting_tags` parameter.
-    
-    
+
+
             In the example below, we achieve the same results as the automatic engine by disabling automatic detection with `outline_detection=0` and setting the parameters manually to `tag_handling=xml`, `split_sentences=nonewlines`,  and `splitting_tags=par,title`.
              * Example request:
                ```
@@ -1506,7 +1505,7 @@ spec:
         PreserveFormattingOption:
           description: |-
             Sets whether the translation engine should respect the original formatting, even if it would usually correct some aspects.
-    
+
             The formatting aspects affected by this setting include:
              * Punctuation at the beginning and end of the sentence
              * Upper/lower case at the beginning of the sentence
@@ -1517,7 +1516,7 @@ spec:
             Sets whether the translation engine should respect the original formatting, even if it would usually correct some aspects. Possible values are:
              * `0` (default)
              * `1`
-    
+
             The formatting aspects affected by this setting include:
              * Punctuation at the beginning and end of the sentence
              * Upper/lower case at the beginning of the sentence
@@ -1530,21 +1529,21 @@ spec:
           description: |-
             Sets whether the translation engine should first split the input into sentences. For text translations where 
             `tag_handling` is not set to `html`, the default value is `1`, meaning the engine splits on punctuation and on newlines.
-    
+
             For text translations where `tag_handling=html`, the default value is `nonewlines`, meaning the engine splits on punctuation only, ignoring newlines.  
-    
+
             The use of `nonewlines` as the default value for text translations where `tag_handling=html` is new behavior that was implemented in November 2022, 
             when HTML handling was moved out of beta. 
-    
+
             Possible values are: 
-    
+
              * `0` - no splitting at all, whole input is treated as one sentence
              * `1` (default when `tag_handling` is not set to `html`) - splits on punctuation and on newlines
              * `nonewlines` (default when `tag_handling=html`) - splits on punctuation only, ignoring newlines
-    
+
             For applications that send one sentence per text parameter, we recommend setting `split_sentences` to `0`, in order to prevent the engine from splitting the sentence unintentionally.
-    
-    
+
+
             Please note that newlines will split sentences when `split_sentences=1`. We recommend cleaning files so they don't contain breaking sentences or setting the parameter `split_sentences` to `nonewlines`.
           type: string
           enum:
@@ -1585,7 +1584,7 @@ spec:
              * `TR` - Turkish
              * `UK` - Ukrainian
              * `ZH` - Chinese
-    
+
             If this parameter is omitted, the API will attempt to detect the language of the text and translate it.
           enum:
           - BG
@@ -1632,8 +1631,8 @@ spec:
           - $ref: '#/components/schemas/TagCommaSeparatedList'
           description: |-
             Comma-separated list of XML tags which never split sentences.
-    
-    
+
+
             For some XML files, finding tags with textual content and splitting sentences using those tags won't yield the best results. The following example shows the engine splitting sentences on `par` tags and proceeding to translate the parts separately, resulting in an incorrect translation:
              * Example request:
             ```
@@ -1643,8 +1642,8 @@ spec:
             ```
             <par>Die Firma sagte, es sei eine gute Idee gewesen.</par><par> Durchführung einer internen Untersuchung.</par>
             ```
-    
-    
+
+
             As this can lead to bad translations, this type of structure should either be avoided, or the `non_splitting_tags` parameter should be set. The following example shows the same call, with the parameter set to `par`:
              * Example request:
             ```
@@ -1654,16 +1653,16 @@ spec:
             ```
             <par>Die Firma sagte, dass sie</par><par> eine interne Untersuchung durchgeführt</par><par> habe</par><par>.</par>
             ```
-    
-    
+
+
             This time, the sentence is translated as a whole. The XML tags are now considered markup and copied into the translated sentence. As the translation of the words "had been" has moved to another position in the German sentence, the two par tags are duplicated (which is expected here).
         NonSplittingTagList:
           allOf:
           - $ref: '#/components/schemas/TagList'
           description: |-
             List of XML tags which never split sentences.
-    
-    
+
+
             For some XML files, finding tags with textual content and splitting sentences using those tags won't yield the best results. The following example shows the engine splitting sentences on `par` tags and proceeding to translate the parts separately, resulting in an incorrect translation:
              * Example request:
             ```
@@ -1673,8 +1672,8 @@ spec:
             ```
             <par>Die Firma sagte, es sei eine gute Idee gewesen.</par><par> Durchführung einer internen Untersuchung.</par>
             ```
-    
-    
+
+
             As this can lead to bad translations, this type of structure should either be avoided, or the `non_splitting_tags` parameter should be set. The following example shows the same call, with the parameter set to `par`:
              * Example request:
             ```
@@ -1684,32 +1683,32 @@ spec:
             ```
             <par>Die Firma sagte, dass sie</par><par> eine interne Untersuchung durchgeführt</par><par> habe</par><par>.</par>
             ```
-    
-    
+
+
             This time, the sentence is translated as a whole. The XML tags are now considered markup and copied into the translated sentence. As the translation of the words "had been" has moved to another position in the German sentence, the two par tags are duplicated (which is expected here).
         SplittingTagCommaSeparatedList:
           allOf:
           - $ref: '#/components/schemas/TagCommaSeparatedList'
           description: |-
             Comma-separated list of XML tags which always cause splits.
-    
-    
+
+
             See the example in the `outline_detection` parameter's description.
         SplittingTagList:
           allOf:
           - $ref: '#/components/schemas/TagList'
           description: |-
             List of XML tags which always cause splits.
-    
-    
+
+
             See the example in the `outline_detection` parameter's description.
         IgnoreTagCommaSeparatedList:
           allOf:
           - $ref: '#/components/schemas/TagCommaSeparatedList'
           description: |-
             Comma-separated list of XML tags that indicate text not to be translated.
-    
-    
+
+
             Use this parameter to ensure that elements in the original text are not altered in the translation (e.g., trademarks, product names) and insert tags into your original text. In the following example, the `ignore_tags` parameter is set to `keep`:
              * Example request:
                ```
@@ -1724,8 +1723,8 @@ spec:
           - $ref: '#/components/schemas/TagList'
           description: |-
             List of XML tags that indicate text not to be translated.
-    
-    
+
+
             Use this parameter to ensure that elements in the original text are not altered in the translation (e.g., trademarks, product names) and insert tags into your original text. In the following example, the `ignore_tags` parameter is set to `keep`:
              * Example request:
                ```
